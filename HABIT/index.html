@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Habit Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <h1>🌱 Habit Tracker</h1>
+      <nav aria-label="Page sections">
+        <a href="#add">Add habit</a>
+        <a href="#progress">Progress</a>
+        <a href="#habits">My habits</a>
+        <a href="#history">History</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <!-- 1. Dashboard -->
+    <section id="dashboard" class="hero" aria-labelledby="greeting">
+      <p id="today-date" class="hero-date"></p>
+      <h2 id="greeting"></h2>
+      <p class="hero-label">Today's Progress</p>
+      <p id="hero-summary" class="hero-summary"></p>
+      <p id="message" class="hero-message" aria-live="polite"></p>
+      <dl class="stats">
+        <div><dt>Total habits</dt><dd id="d-total">0</dd></div>
+        <div><dt>Completed today</dt><dd id="d-done">0</dd></div>
+        <div><dt>Completion</dt><dd id="d-percent">0%</dd></div>
+        <div><dt>Overall streak</dt><dd id="d-streak">0 days</dd></div>
+      </dl>
+    </section>
+
+    <div class="layout">
+      <!-- 2. Add habit -->
+      <section id="add" class="panel" aria-labelledby="add-title">
+        <h2 id="add-title">Add a habit</h2>
+        <form id="habit-form" novalidate>
+          <label for="habit-name">Habit name</label>
+          <input id="habit-name" type="text" maxlength="60" placeholder="Read for 30 minutes" autocomplete="off" aria-describedby="form-error">
+          <p id="form-error" class="error" aria-live="polite"></p>
+
+          <label for="habit-category">Category</label>
+          <select id="habit-category">
+            <option>Health</option>
+            <option>Study</option>
+            <option>Fitness</option>
+            <option>Personal</option>
+            <option>Other</option>
+          </select>
+
+          <button type="submit" class="btn btn-primary">Add Habit</button>
+        </form>
+      </section>
+
+      <!-- 7. Progress -->
+      <section id="progress" class="panel" aria-labelledby="progress-title">
+        <h2 id="progress-title">Progress</h2>
+        <dl class="progress-list">
+          <div><dt>Total Habits</dt><dd id="p-total">0</dd></div>
+          <div><dt>Completed</dt><dd id="p-done">0</dd></div>
+          <div><dt>Remaining</dt><dd id="p-left">0</dd></div>
+          <div><dt>Progress</dt><dd id="p-percent">0%</dd></div>
+        </dl>
+        <div id="bar" class="bar" role="progressbar" aria-label="Today's completion" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+          <div id="bar-fill" class="bar-fill"></div>
+        </div>
+      </section>
+
+      <!-- 3, 8, 9, 13. Habit list, filter, search, empty state -->
+      <section id="habits" class="panel" aria-labelledby="habits-title">
+        <h2 id="habits-title">My habits</h2>
+
+        <div id="habit-tools">
+          <label for="search">Search habits</label>
+          <input id="search" type="search" placeholder="Type a habit name" autocomplete="off">
+          <div class="filters" role="group" aria-label="Filter by category">
+            <button type="button" class="chip active" data-cat="All" aria-pressed="true">All</button>
+            <button type="button" class="chip" data-cat="Health" aria-pressed="false">Health</button>
+            <button type="button" class="chip" data-cat="Study" aria-pressed="false">Study</button>
+            <button type="button" class="chip" data-cat="Fitness" aria-pressed="false">Fitness</button>
+            <button type="button" class="chip" data-cat="Personal" aria-pressed="false">Personal</button>
+            <button type="button" class="chip" data-cat="Other" aria-pressed="false">Other</button>
+          </div>
+        </div>
+
+        <div id="empty-state" class="empty">
+          <p class="empty-title">🌱 No habits added yet.</p>
+          <p>Add your first habit to start tracking your progress!</p>
+          <button type="button" id="empty-add" class="btn btn-primary">Add Habit</button>
+        </div>
+        <p id="no-match" class="empty" hidden>No habits match your search or filter.</p>
+
+        <div id="habit-list" class="habit-list"></div>
+      </section>
+
+      <!-- 6. History -->
+      <section id="history" class="panel" aria-labelledby="history-title">
+        <h2 id="history-title">Habit history</h2>
+
+        <div class="month-nav">
+          <button type="button" id="prev-month" class="btn btn-ghost" aria-label="Previous month">◀</button>
+          <h3 id="month-title" aria-live="polite"></h3>
+          <button type="button" id="next-month" class="btn btn-ghost" aria-label="Next month">▶</button>
+        </div>
+        <div class="weekdays" aria-hidden="true">
+          <span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span>
+        </div>
+        <div id="calendar" class="calendar"></div>
+
+        <ul class="legend">
+          <li><span class="swatch complete">✓</span> Completed</li>
+          <li><span class="swatch missed">✗</span> Not completed</li>
+          <li><span class="swatch nodata">–</span> No data</li>
+        </ul>
+
+        <label for="history-date">Choose a date</label>
+        <input id="history-date" type="date">
+        <div id="day-detail" class="day-detail" aria-live="polite"></div>
+      </section>
+    </div>
+
+    <p id="status" class="sr-only" aria-live="polite"></p>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>Your habits are saved in this browser only.</p>
+      <button type="button" id="clear-data" class="btn btn-danger">Clear All Data</button>
+    </div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
